@@ -11,6 +11,9 @@ module.exports = {
       : "/", // 基本路径
   outputDir: `${projectBuildPathName}`, // 输出文件目录
   configureWebpack: config => {
+    config["externals"] = {
+      tMap: "T"
+    };
     if (process.env.NODE_ENV === "production") {
       // 为生产环境修改配置...
       config.mode = "production";

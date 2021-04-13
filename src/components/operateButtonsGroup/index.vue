@@ -1,5 +1,6 @@
 <template>
   <div class="operate-buttons-group">
+    <slot name="front"></slot>
     <template v-for="operateBtn in operateButtonsSettings.buttonListData">
       <el-dropdown
         :class="operateBtn.className"
@@ -33,9 +34,10 @@
           :key="operateBtn.flag"
           :type="operateBtn.styleType"
           :size="operateBtn.size"
-          :icon="operateBtn.icon"
+          :class="operateBtn.btnClassName"
           @click="handleOperate(operateBtn)"
         >
+          <i v-if="operateBtn.icon" :class="operateBtn.icon"></i>
           {{ operateBtn.label }}
         </el-button>
       </template>

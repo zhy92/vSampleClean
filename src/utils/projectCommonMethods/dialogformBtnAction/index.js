@@ -48,10 +48,6 @@ export default (envObj, mainData, btn, options) => {
       Object.prototype.toString.call(mainData) == "[object FormData]"
         ? mainData
         : envObj.$globalFnc.postArrtoString(mainData);
-
-    // mainData.forEach((value, key) => {
-    //   console.log(key + ":" + value);
-    // });
     envObj
       .$http(envObj.$api[btn[defaultOptions.btnPostUrl]](methodFlag), mainData)
       .then(xhr => {

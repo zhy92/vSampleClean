@@ -9,6 +9,9 @@ const mutations = {
   setUserButtons: (state, userButtons) => {
     state.userButtons = userButtons;
   },
+  setBaseInfos: (state, baseInfos) => {
+    state.baseInfos = baseInfos;
+  },
   setStateClearUserInfos: state => {
     let userInfos = {
       userName: "",

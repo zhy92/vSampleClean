@@ -1,12 +1,14 @@
 <template>
   <div class="tree-components">
+    <!--:current-node-key="treeSettings.treeData[0][treeSettings.nodeKey || 'id']" -->
+    <!--    :default-expand-all="!treeSettings.notExpandAll"-->
     <el-tree
       :class="treeSettings.treeClassName"
       :data="treeSettings.treeData || []"
-      :default-expand-all="treeSettings.expandAll || true"
       :node-key="treeSettings.nodeKey || 'id'"
       ref="tree"
-      :highlight-current="treeSettings.highlightCurrent || false"
+      :default-expanded-keys="defaultCheckedKeys"
+      :highlight-current="!treeSettings.notHighlightCurrent"
       :expand-on-click-node="treeSettings.nodeExpand || false"
       :props="treeSettings.defaultProps"
       :show-checkbox="treeSettings.treeWithCheckbox"
@@ -67,7 +69,32 @@ export default {
   props: {
     treeSettings: Object
   },
+  computed: {
+    defaultCheckedKeys: function() {
+      if (this.treeSettings.treeData && this.treeSettings.treeData.length) {
+        return [
+          this.treeSettings.treeData[0].children[0][
+            this.treeSettings.nodeKey || "id"
+          ]
+        ];
+      } else {
+        return [];
+      }
+    }
+  },
+  mounted() {
+    if (!this.treeSettings.notSetFirstNodeHighlight) {
+      this.$nextTick(() => {
+        this.setHighlightNodes();
+      });
+    }
+  },
   methods: {
+    setHighlightNodes() {
+      this.$refs.tree.setCurrentKey(
+        this.treeSettings.treeData[0][this.treeSettings.nodeKey || "id"]
+      );
+    },
     setCheckedNodes() {
       // this.$refs.tree.setCheckedNodes([
       //   {

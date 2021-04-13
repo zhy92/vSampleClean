@@ -26,3 +26,43 @@
   background: #fff;
 }
 //=======滚动条样式重置👆==========
+
+//=======左侧树形，右侧列表类型，左右结构页面样式重置👇==========
+.treeMainPage{
+  .positionAbs;
+  .positionFullScreenWrap;
+  &-leftTree{
+    .width(260px);
+    .overflowXhYa;
+    .positionAbs;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-right: 1px solid @colorE8;
+  }
+  &-rightContainer{
+    .positionAbs;
+    left: 275px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    .overflowXhYa;
+    .pr20;
+  }
+}
+//=======左侧树形，右侧列表类型，左右结构页面样式重置👆========== 
+
+//=======搜索按钮，中间操作组按钮样式修改成江西项目样式👇==========
+.searchButtons{
+  background: @colorF4;
+  border-radius: 4px;
+  border: 1px solid @colorDDD;
+  .iconfont{
+    .fontSize14;
+  }
+}
+//=======搜索按钮，中间操作组按钮样式修改成江西项目样式👆========== 
+.mainPage{
+  .width(100%);
+  .height(100%)
+}

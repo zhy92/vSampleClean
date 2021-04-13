@@ -1,7 +1,12 @@
-const projectName = "oh-wms";
+const projectName = "oh-fpmp";
 const projectBuildPath = "oh";
 const mainPrefix = `/${projectName}`;
+const testUrl = "http://10.10.7.4:8381";
+const devUrl = "http://192.168.2.158:8085";
+const agentUrl = "/admin";
 export default {
+  // 本地调试地址
+  testUrl: testUrl,
   // 项目路径基础前缀（工程名，主要用于接口路径）
   mainPrefix: mainPrefix,
   // 项目名称
@@ -12,7 +17,8 @@ export default {
   baseURL:
     process.env.NODE_ENV === "production"
       ? mainPrefix
-      : `http://10.10.7.4:8780/${projectName}`,
+      : `${testUrl}/${projectName}`,
+  // `${agentUrl}`,
   // 下载保存在本地public中的文件模板
   fileDownloadUrl:
     process.env.NODE_ENV === "production"

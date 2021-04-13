@@ -1,5 +1,5 @@
 <template>
-  <div class="form-group">
+  <div class="form-group" :class="formGroupSettings.formClassName">
     <el-form
       ref="formItems"
       :model="formGroupSettings.formGroupValues"
@@ -428,6 +428,7 @@
                       class="width100"
                       :placeholder="formItem.placeHolder"
                       :options="formItem.data"
+                      :show-all-levels="formItem.showAllLevels"
                       :props="formItem.props"
                       :filterable="formItem.filterable"
                       :disabled="formItem.disabled"

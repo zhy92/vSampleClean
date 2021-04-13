@@ -4,7 +4,7 @@ export default fileItem => {
   // window.open(
   //   store.getters["user/fileViewerUrl"] +
   //     encodeURIComponent(
-  //       api.commonDownloadUrl +
+  //       api.officeViewUrl_common +
   //         "fbFileId=" +
   //         fileItem.fileId +
   //         "&fileName" +
@@ -15,7 +15,7 @@ export default fileItem => {
   //   "_blank"
   // );
   window.location.href =
-    api.commonDownloadUrl +
+    api.officeViewUrl_common +
     "fbFileId=" +
     fileItem.fileId +
     "&fileName=" +

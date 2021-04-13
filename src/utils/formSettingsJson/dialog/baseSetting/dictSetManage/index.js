@@ -43,18 +43,18 @@ let addDictListItems = [
       data: [],
       span: 12,
       width: "150px"
-    },
-    {
-      type: "select",
-      label: "系统类型",
-      name: "sysType",
-      multiple: false,
-      placeHolder: "请选择",
-      filterable: false,
-      data: [],
-      span: 12,
-      width: "150px"
     }
+    // {
+    //   type: "select",
+    //   label: "系统类型",
+    //   name: "sysType",
+    //   multiple: false,
+    //   placeHolder: "请选择",
+    //   filterable: false,
+    //   data: [],
+    //   span: 12,
+    //   width: "150px"
+    // }
   ],
   addDictListButton = [
     {

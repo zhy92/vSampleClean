@@ -5,16 +5,48 @@
 export function initRouter(routerlist) {
   const router = [];
   routerlist.forEach(e => {
-    let pathArr = e.menuaction ? e.menuaction.split("/") : "",
+    /** 
+     * 1.path和component路径一致，e.menuaction = modules/planSetting/reservePlan
+     * {
+          path: "/modules/planSetting/reservePlan",
+          name: "reservePlan",
+          hidden: false,
+          component: () => import("@/views/modules/planSetting/reservePlan"),
+          meta: {
+            title: "储备计划",
+            icon: "iconkudian text-danger fontSize20"
+          }
+        }
+     * 2.path和component路径不一致，e.menuaction = modules/planSetting/reservePlan?modules/planSetting/reservePlan2
+     * {
+          path: "/modules/planSetting/reservePlan",
+          name: "reservePlan",
+          hidden: false,
+          component: () => import("@/views/modules/planSetting/reservePlan2"),
+          meta: {
+            title: "储备计划",
+            icon: "iconkudian text-danger fontSize20"
+          }
+        }  
+     * */
+    let actionsArr = e.menuaction.split("?");
+    // if (!e.children || e.children.length == 0) {
+    //   compUrl = "@/views/modules/planSetting/reservePlan";
+    // } else {
+    //   compUrl = "@/views/commonViewPlat/menuPlat";
+    // }
+    let pathArr = actionsArr[0] ? actionsArr[0].split("/") : "",
       e_new = {
-        path: "/" + e.menuaction,
+        path: "/" + actionsArr[0],
         name: pathArr[pathArr.length - 1],
-        component: () => import("@/views/" + e.menumodule)
-        // component: () => import("@/views/modules/baseSetting/menuSetManage")
+        component: () =>
+          import(
+            "@/views/" + (actionsArr.length > 1 ? actionsArr[1] : actionsArr[0])
+          )
       };
     if (e.children && e.children.length > 0) {
       e_new = Object.assign({}, e_new, {
-        redirect: "/" + e.children[0].menuaction,
+        redirect: "/" + e.children[0].menuaction.split("?")[0],
         children: initRouter(e.children)
       });
     }

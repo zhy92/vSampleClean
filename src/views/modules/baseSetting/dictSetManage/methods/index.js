@@ -3,14 +3,6 @@ const methods = {
    *  初始化页面
    */
   initPageData() {
-    this.$fomateButtonToShow(this.operateButtonsSettings.buttonListData).then(
-      data => {
-        this.operateButtonsSettings.buttonListData = data;
-      }
-    );
-    this.$fomateButtonToShow(this.tableOperateBtns).then(data => {
-      this.tableOperateBtns = data;
-    });
     let defaultdatas = this.$globalFnc.deepCopy(
       this.$refs.searchForm.formGroupSettings.formGroupValues
     );
@@ -26,6 +18,11 @@ const methods = {
       formData = {};
     }
     let filterRules = [];
+    filterRules.push({
+      field: "sysType",
+      op: "contains",
+      value: this.$global.projectName
+    });
     if (formData.busintypename) {
       filterRules.push({
         field: "busintypename",
@@ -46,7 +43,6 @@ const methods = {
     let baseForm = {
       page: this.paginationSettings.currentPage,
       rows: this.$global.paginationOption.numberPerpage,
-      sysType: this.$global.projectName,
       filterRules: JSON.stringify(filterRules)
     };
     this.tableSettings.tableDatas = [];
@@ -55,40 +51,47 @@ const methods = {
     });
   },
   setTableList(data) {
-    data.rows.map(item => {
-      if (item.isTree == "1") {
-        item["isTree-zh_CN"] = "是";
-      } else if (item.isTree == "0") {
-        item["isTree-zh_CN"] = "否";
-      } else {
-        item["isTree-zh_CN"] = "";
-      }
-      item.maintainanceMode__dsp =
-        "字典项非系统保留部分可修改</br>字典项非系统保留部分可修改";
-      item.operateBtns = this.$globalFnc.deepCopy(this.tableOperateBtns);
-      if (item.maintainanceMode == "S") {
-        /**
-         * 行间按钮显示方式两种，一种直接循环数组，另一种通过公用方法
-         * **/
-        // 方法一
-        // item.operateBtns.map(optBtn=>{
-        //   if(optBtn.type=="delete"){
-        //     optBtn.showFlag = false
-        //   }
-        // })
-        // 方法二
-        this.$fomateButtonToShow(item.operateBtns, {
-          target: "delete",
-          prop: "type",
-          flag: "showFlag",
-          action: "false"
-        }).then(operateBtns => {
-          item.operateBtns = operateBtns;
+    let propObject = {
+      name: "operateBtns",
+      porpvalue: [
+        {
+          text: "业务代码",
+          type: "add",
+          class: "text-primary fontSize20 mr10",
+          icon: "el-icon-folder-add",
+          isIcon: true
+        }
+      ]
+    };
+    let dictList = this.$globalFnc.deepCopy(data.rows);
+    this.formatData(dictList, propObject);
+    this.tableSettings.tableDatas = dictList;
+    this.paginationSettings.totalNumbers = data.total;
+  },
+  formatData(data, prop) {
+    data.map(item => {
+      // S表示系统维护不需要操作
+      item[prop.name] = this.$globalFnc.deepCopy(prop.porpvalue);
+      if (item.maintainanceMode !== "S") {
+        item[prop.name].push({
+          text: "删除",
+          type: "delete",
+          class: "text-primary fontSize20 mr10",
+          icon: "el-icon-delete",
+          isIcon: true
         });
       }
+      switch (item.isTree) {
+        case "1":
+          item["isTree-zh_CN"] = "是";
+          break;
+        case "0":
+          item["isTree-zh_CN"] = "否";
+          break;
+        default:
+          item["isTree-zh_CN"] = "";
+      }
     });
-    this.tableSettings.tableDatas = data.rows;
-    this.paginationSettings.totalNumbers = data.total;
   },
   //首页，分页切换
   handlePaginationPagenumber(val) {
@@ -96,42 +99,38 @@ const methods = {
     this.initPageData();
   },
   handleTableRowButton(row, btns) {
-    switch (btns.type) {
-      case "delete":
-        this.$confirm("确认删除？", "确认框", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
+    if (btns.type === "delete") {
+      this.$confirm("确认删除？", "确认框", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        this.$postData(this.$api.deleteDict, {
+          busintypeid: row["busintypeid"]
         }).then(() => {
-          this.$postData(this.$api.deleteDict, {
-            busintypeid: row["busintypeid"]
-          }).then(() => {
-            this.$message.success("删除成功!");
-            this.initPageData();
-          });
+          this.$message.success("删除成功!");
+          this.initPageData();
         });
-        break;
-      case "add":
-        this.dictContentDialogSetting.dialogVisible = true;
-        // 保存这一行的信息
-        this.dictListRowData = row;
+      });
+    }
+    if (btns.type === "add") {
+      this.dictContentDialogSetting.dialogVisible = true;
+      // 保存这一行的信息
+      this.dictListRowData = row;
 
-        //  如果 是树形的话，增加选择上级字典
-        this.dictContentItems.forEach(item => {
-          if (item.name === "parentId") {
-            if (row.isTree == "1") {
-              item.hideItem = false;
-            } else {
-              item.hideItem = true;
-            }
+      //  如果 是树形的话，增加选择上级字典
+      this.dictContentItems.forEach(item => {
+        if (item.name === "parentId") {
+          if (row.isTree == "1") {
+            item.hideItem = false;
+          } else {
+            item.hideItem = true;
           }
-        });
-        // 字典表内容默认第一页
-        this.dictContentPaginationSettings.currentPage = 1;
-        this.setDictContentList();
-        break;
-      default:
-        break;
+        }
+      });
+      // 字典表内容默认第一页
+      this.dictContentPaginationSettings.currentPage = 1;
+      this.setDictContentList();
     }
   },
   /**
@@ -163,7 +162,7 @@ const methods = {
     return data.map(item => {
       // 维护方式
       if (item.name === "maintainanceMode") {
-        this.$getData(this.$api.dictList, {
+        this.$getData(this.$api.dictList_common, {
           _refKey: "dict",
           busintypeid: "BNDICT_MAINTAINANCE_MODE"
         }).then(res => {
@@ -171,14 +170,14 @@ const methods = {
         });
       }
       //  系统类型
-      if (item.name === "sysType") {
-        this.$getData(this.$api.dictList, {
-          _refKey: "dict",
-          busintypeid: "wms_base_menuSys"
-        }).then(res => {
-          item.data = this.$globalFnc.arrayToFormDropdown(res, "text", "value");
-        });
-      }
+      // if (item.name === "sysType") {
+      //   this.$getData(this.$api.dictList_common, {
+      //     _refKey: "dict",
+      //     busintypeid: "wms_base_menuSys"
+      //   }).then(res => {
+      //     item.data = this.$globalFnc.arrayToFormDropdown(res, "text", "value");
+      //   });
+      // }
       if (item.name === "parentId") {
         this.$postData(this.$api.getHigherLevelTree, {
           busintypeid: this.dictListRowData["busintypeid"]
@@ -289,35 +288,31 @@ const methods = {
     }
   },
   handleDictContentTableRowButton(row, btns) {
-    switch (btns.type) {
-      case "delete":
-        this.$confirm("确认删除？", "确认框", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(() => {
-          let params = {
-            busintypeid: row["busintypeid"],
-            businid: row["businid"],
-            dicId: row["dicId"]
-          };
-          this.$postData(this.$api.deleteDictContent, params).then(() => {
-            this.$message.success("删除成功!");
-            this.setDictContentList();
-          });
+    if (btns.type === "delete") {
+      this.$confirm("确认删除？", "确认框", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        let params = {
+          busintypeid: row["busintypeid"],
+          businid: row["businid"],
+          dicId: row["dicId"]
+        };
+        this.$postData(this.$api.deleteDictContent, params).then(() => {
+          this.$message.success("删除成功!");
+          this.setDictContentList();
         });
-        break;
-      case "edit":
-        this.dialogFormSettings.dialogFormTitle = "新增字典内容";
-        // 加载表单组
-        this.dialogFormSettings.dialogFormItems.formButtonList = this.editDictContentButton;
-        this.dialogFormSettings.dialogFormItems.formGroupList = this.dictContentItems;
-        // 编辑回显
-        this.dialogFormSettings.dialogFormItems.formGroupValues = row;
-        this.dialogFormSettings.dialogFormVisible = true;
-        break;
-      default:
-        break;
+      });
+    }
+    if (btns.type === "edit") {
+      this.dialogFormSettings.dialogFormTitle = "新增字典内容";
+      // 加载表单组
+      this.dialogFormSettings.dialogFormItems.formButtonList = this.editDictContentButton;
+      this.dialogFormSettings.dialogFormItems.formGroupList = this.dictContentItems;
+      // 编辑回显
+      this.dialogFormSettings.dialogFormItems.formGroupValues = row;
+      this.dialogFormSettings.dialogFormVisible = true;
     }
   }
 };

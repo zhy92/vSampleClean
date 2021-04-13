@@ -10,9 +10,13 @@ import initPageData from "./initPageData";
 import formatSearchData from "./formatSearchData";
 /* 资源控制页面上按钮是否显示 */
 import fomateButtonToShow from "./fomateButtonToShow";
+/* 设置页面上库点和机构表单项默认值 */
+import setStorePointAndOrgInput from "./setStorePointAndOrgInput";
 
 export default {
   install: _Vue => {
+    /* 设置页面上库点和机构表单项默认值 */
+    _Vue.prototype.$setStorePointAndOrgInput = setStorePointAndOrgInput;
     /* 资源控制页面上按钮是否显示 */
     _Vue.prototype.$fomateButtonToShow = fomateButtonToShow;
     /* 格式化搜索栏数据 */

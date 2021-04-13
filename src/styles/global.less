@@ -24,6 +24,7 @@
 @import "./components/citcle-dot.less";
 @import "./components/formGroup.less";
 @import "./components/menuTable.less";
+@import "./components/inputTable.less";
 
 // 引入工程内通用样式
 @import "./projectStyle/common.less";
@@ -117,6 +118,9 @@ p,ul {
 .displayNone{
 	display: none;
 }
+.visiHidden{
+    visibility: hidden;
+}
 .displayInlineBlock{
 	display: inline-block;
 }
@@ -190,22 +194,25 @@ p,ul {
 // 字体颜色，使用方式：class="text-warning text-danger"
 .text{
   &-warning{
-    color: @warning;
+    color: @warning !important;
   }
   &-danger{
-    color: @danger;
+    color: @danger !important;
   }
   &-success{
-    color: @success;
+    color: @success !important;
   }
   &-primary{
-    color: @primary;
+    color: @primary !important;
+  }
+  &-normal{
+    color: @normal !important;
   }
   &-white{
-    color: @mainWhite;
+    color: @mainWhite !important;
   }
   &-plainInfo {
-    color: #bfbfbf;
+    color: @colorBF !important;
   }
 }
 // 鼠标显示为手型👆
@@ -288,7 +295,7 @@ p,ul {
 
 //循环生成行高样式，调用时可直接在页面上使用<div class="lheight30">
 //定义lineHeight数组，生成样式名：lheight20，lheight30,lheight40......
-@lineHeightList: 20 24 28 30 40 90;
+@lineHeightList: 20 24 28 30 32 40 90;
 .lh-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
     .lheight@{val}{
         line-height:@val + 0px !important;
@@ -313,7 +320,7 @@ p,ul {
 //定义要生成的class名称数组
 @distantName:pd pl pr pt pb mg ml mr mt mb;
 //定义要生成的边距距离数组
-@distant:-20 0 3 4 5 6 8 10 14 15 20 23 24 25 28 30 33 40 45 50 60 70 100;
+@distant:-20 -5 0 3 4 5 6 8 10 14 15 20 23 24 25 28 30 33 40 45 50 60 70 100;
 .loop3(@index) when (@index < length(@distantName)+1) {
     .loop2(@counter,@val:extract(@distant,@counter)) when (@counter < length(@distant)+1) {
         & when (extract(@distantName, @index) = pd) {

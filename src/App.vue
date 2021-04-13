@@ -7,7 +7,10 @@
 export default {
   name: "App",
   mounted() {
-    this.$store.dispatch("user/commitUserButtons");
+    sessionStorage.setItem("isNotreload", "true");
+    window.addEventListener("beforeunload", function() {
+      sessionStorage.setItem("isNotreload", "false");
+    });
   }
 };
 </script>

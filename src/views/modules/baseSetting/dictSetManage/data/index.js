@@ -3,34 +3,32 @@ import {
   searchFormBtns,
   searchFormItems
 } from "@/utils/formSettingsJson/search/baseSetting/dictSetManage";
-// table表头信息设置src\utils\formSettingsJson\table\systemSetting\dictSetManage
+
+// table 上方按钮
 import {
-  tableHeader, // 页面
-  tableOperateBtns, // 表格行间按钮
-  dictContentTableHeader //对话框
-} from "@/utils/formSettingsJson/table/baseSetting/dictSetManage";
-// 表格上方按钮
-import {
-  operateButtons, // 页面
-  dictContentOperateButtons //对话框
+  operateButtons,
+  dictContentOperateButtons
 } from "@/utils/formSettingsJson/operateButton/baseSetting/dictSetManage";
 
-// 业务代码
+// table表头信息设置
+import {
+  tableHeader,
+  dictContentTableHeader
+} from "@/utils/formSettingsJson/table/baseSetting/dictSetManage";
+// 新建字典表列表
 import {
   addDictListItems,
-  addDictListButton, // 页面
+  addDictListButton,
   dictContentItems,
   addDictContentButton,
-  editDictContentButton //对话框
+  editDictContentButton
 } from "@/utils/formSettingsJson/dialog/baseSetting/dictSetManage";
 
 // 必填验证
-import targetSetRule from "@/utils/formRulesJson/baseSetting/dictSetManage/dictSetRule";
+import dictSetRule from "@/utils/formRulesJson/baseSetting/dictSetManage";
 
 const data = function(vm) {
   let obj = {
-    // table行间按钮
-    tableOperateBtns: tableOperateBtns,
     // 搜索栏
     searchFormSettings: {
       fullScreen: false,
@@ -43,8 +41,8 @@ const data = function(vm) {
     tableSettings: {
       tableDatas: [],
       tableSettingOptions: {
-        ref: "demo",
-        rowKey: "id",
+        ref: "dictTable",
+        rowKey: "busintypeid",
         tooltipEffect: "dark",
         border: true,
         defaultExpandAll: true,
@@ -73,7 +71,7 @@ const data = function(vm) {
         formGroupValues: {},
         formGroupList: [],
         formButtonList: [],
-        rules: targetSetRule
+        rules: dictSetRule
       }
     },
     // 业务代码弹框

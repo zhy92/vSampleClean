@@ -21,10 +21,7 @@
             <div
               class="menuTable-container-block-container-item-icon textAlignCenter mt5 mb5"
             >
-              <em
-                :class="['iconfont fontSize30', item.meta.icon]"
-                style="color:#0091FF"
-              ></em>
+              <em :class="['iconfont fontSize30', item.meta.icon]"></em>
             </div>
             <div
               class="menuTable-container-block-container-item-text fontSize12 textAlignCenter"

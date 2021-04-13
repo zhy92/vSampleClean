@@ -1,84 +1,61 @@
 const methods = {
-  /* 点击未读消息操作按钮 */
-  handleCheckUnread() {
-    this.$router.push("/informationsPage/infosManage/myCheckout");
+  /**
+   * 添加地图类型控件
+   */
+  addCtrl() {
+    var ctrl = new T.Control.MapType();
+    this.map.addControl(ctrl);
   },
-  /* 点击card组件头部操作按钮 */
-  handleDetailOperate(type) {
-    this.$router.push({
-      path: "/informationsPage/infosManage/allInfos/" + type
-    });
-  },
-  /* 点击card组件具体条目 */
-  handleDetailItemTap(item) {
-    this.$router.push({
-      path: "/informationsPage/infosManage/infosManageDetail",
-      query: {
-        cmsContentId: item.cmsContentId,
-        fromPage: this.$route.fullPath
-      }
+  /**
+   * 添加普通标注
+   * @param site  (site.lng, site.lat)  地理坐标
+   */
+  markerPoint(site) {
+    site.forEach(item => {
+      //创建标注对象
+      let marker = new T.Marker(new T.LngLat(item.lng, item.lat));
+      //向地图上添加标注
+      this.map.addOverLay(marker);
     });
   },
   /**
-   * 获取信息列表数据
+   * 添加地图事件
    */
-  getAllInfosData() {
-    for (let key in this.channelIdMap) {
-      let infoObj = {
-        cardlistTitle: this.channelIdMap[key].title,
-        cardlistOperation: "更多>>",
-        cardType: key,
-        cardlistsArray: [],
-        cardItemParams: {
-          main: "title",
-          subMain: "updated"
-        },
-        cardItemStyle: {
-          bg: {
-            background:
-              this.channelIdMap[key]["cmsChannelId"] % 2 == 0
-                ? "linear-gradient(90deg, #BBE9CF 0%, #F7FFFA 100%)"
-                : "linear-gradient(90deg, #EDDCAA 0%, #FFFFFE 100%)"
-          },
-          color: {
-            color:
-              this.channelIdMap[key]["cmsChannelId"] % 2 == 0
-                ? "#4AAF87"
-                : "#C57A2E"
-          },
-          seperatorBg: {
-            background:
-              this.channelIdMap[key]["cmsChannelId"] % 2 == 0
-                ? "#4AAF87"
-                : "#C57A2E"
-          }
-        }
-      };
-      (channelId => {
-        let formData = {
-          page: 1,
-          rows: 10,
-          sort: "updated",
-          order: "desc",
-          filterRules: []
-        };
-        let filterRules = [
-          { field: "cmsChannelId", op: "=", value: channelId + "" },
-          { field: "status", op: "=", value: "6" }
-        ];
-        formData.filterRules = JSON.stringify(filterRules);
-        this.$getData(this.$api.getContentList_infosManageApi, formData).then(
-          xhr => {
-            if (xhr && xhr.rows) {
-              infoObj.cardlistsArray = xhr.rows;
-            } else {
-              infoObj.cardlistsArray = [];
-            }
-          }
-        );
-      })(this.channelIdMap[key].cmsChannelId);
-      this.infolist.push(infoObj);
-    }
+  addEvent() {
+    let that = this;
+    let cp = new T.CoordinatePickup(that.map, {
+      callback: lnglat => {
+        that.lngLat.lng = lnglat.lng.toFixed(6);
+        that.lngLat.lat = lnglat.lat.toFixed(6);
+      }
+    });
+    cp.addEvent();
+  },
+  MapClick(e) {
+    alert(e.lnglat.getLng() + "," + e.lnglat.getLat());
+  },
+  addMapClick() {
+    let that = this;
+    this.removeMapClick();
+    this.map.addEventListener("click", that.MapClick);
+  },
+  removeMapClick() {
+    let that = this;
+    this.map.removeEventListener("click", that.MapClick);
+  },
+  onLoad() {
+    let that = this;
+    that.map = new T.Map("mapDiv");
+    that.map.centerAndZoom(new T.LngLat(115.40037, 28.68793), that.zoom); // 设置显示地图的中心点和级别
+    // 添加地图类型控件
+    that.addCtrl();
+    // 普通标注
+    let site = [{ lng: 115.40037, lat: 28.68793 }];
+    that.markerPoint(site);
+    // 添加事件
+    that.addEvent();
+    console.log(that.lngLat, " that.lngLat");
+    that.addMapClick();
   }
 };
 export default methods;

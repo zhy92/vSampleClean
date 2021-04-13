@@ -3,14 +3,23 @@
     <!-- @expand-change="handleExpandTableRow" 点击展开收缩所有树节点 -->
     <el-table
       class="tableClass width100"
+      :stripe="!tablelistSettings.tableSettingOptions.nostripe"
       :ref="tablelistSettings.tableSettingOptions.ref"
       :data="tablelistSettings.tableDatas"
       :tooltip-effect="
         tablelistSettings.tableSettingOptions.tooltipEffect || 'dark'
       "
+      :height="tablelistSettings.tableSettingOptions.height"
+      @current-change="handleCurrentChange"
+      @select="handleSelectRow"
       @selection-change="handleSelectionChange"
+      @select-all="handleSelectAllChange"
       :row-key="tablelistSettings.tableSettingOptions.rowKey"
-      :row-class-name="tablelistSettings.tableSettingOptions.rowClassName"
+      :row-class-name="
+        tablelistSettings.tableSettingOptions.rowClassName
+          ? tablelistSettings.tableSettingOptions.rowClassName
+          : getClassNameFnc
+      "
       :header-row-class-name="
         tablelistSettings.tableSettingOptions.headerRowClassName
       "
@@ -20,11 +29,15 @@
         tablelistSettings.tableSettingOptions.defaultExpandAll || false
       "
       :tree-props="tablelistSettings.tableSettingOptions.treeProps"
+      :highlight-current-row="
+        tablelistSettings.tableSettingOptions.highlightCurrent
+      "
     >
       <el-table-column
         v-if="tablelistSettings.tableSettingOptions.isMultipleTable"
         type="selection"
-        width="55"
+        width="45"
+        align="center"
       >
       </el-table-column>
       <el-table-column
@@ -32,6 +45,7 @@
         type="index"
         width="50"
         :label="tablelistSettings.tableSettingOptions.showIndexHeader || ''"
+        align="center"
       >
       </el-table-column>
       <el-table-column
@@ -140,9 +154,9 @@
           :class-name="
             head.propType == 'operateBtns'
               ? 'cellVisible textAlignCenter'
-              : 'normalCells'
+              : 'normalCells textAlignCenter'
           "
-          :width="head.propType == 'operateBtns' ? '110px' : head.width"
+          :width="head.width"
           :show-overflow-tooltip="
             head.columnTooltip
               ? false
@@ -150,7 +164,7 @@
           "
           v-if="!head.isHide && !head.children"
         >
-          <div slot-scope="scope">
+          <template slot-scope="scope">
             <a
               v-if="head.clickable"
               class="cursor textColorLightBlue width100 displayInlineBlock"
@@ -188,9 +202,12 @@
                 </template>
                 <template v-else>
                   <el-popover
-                    v-if="scope.row[head.prop].length > 1"
+                    v-if="
+                      scope.row[head.prop].length >
+                        (head.btnNum ? head.btnNum : 3)
+                    "
                     placement="left"
-                    trigger="click"
+                    trigger="hover"
                   >
                     <!-- 这里向下for循环之内的全部复制替换el-popover可在table直接显示按钮 -->
                     <template v-for="operateBtn in scope.row[head.prop]">
@@ -246,7 +263,7 @@
                       展开操作组
                     </el-button>
                   </el-popover>
-                  <template v-else-if="scope.row[head.prop].length == 1">
+                  <template v-else>
                     <template v-for="operateBtn in scope.row[head.prop]">
                       <el-button
                         v-show="
@@ -273,7 +290,7 @@
                 <circleDot :status="scope.row[head.prop]" />
               </template>
               <template v-else-if="head.propType == 'timeFormart'">
-                {{ scope.row[head.prop] | formatdate }}
+                {{ scope.row[head.prop] | formatdate(head.timeType || "") }}
               </template>
               <template v-else>
                 <template
@@ -283,9 +300,9 @@
                   "
                 >
                   <template v-if="!head.columnTooltip">
-                    <div class="textEllipsis width100 overflowHidden">
-                      {{ scope.row[head.prop] }}
-                    </div>
+                    <!-- <div class="textEllipsis width100 overflowHidden"> -->
+                    {{ scope.row[head.prop] }}
+                    <!-- </div> -->
                   </template>
 
                   <!-- 如需要，单独判断单元格head配置显示 -->
@@ -301,7 +318,7 @@
                 <template v-else>{{ "—" }}</template>
               </template>
             </template>
-          </div>
+          </template>
         </el-table-column>
         <el-table-column
           :key="head.prop"
@@ -316,6 +333,7 @@
         </el-table-column>
       </template>
     </el-table>
+    <slot name="pager"></slot>
   </div>
 </template>
 <script>
@@ -326,25 +344,60 @@ import fileshowList from "@/components/formGroup/fileList";
 export default {
   name: "tableList",
   props: {
-    tablelistSettings: Object
+    tablelistSettings: Object,
+    selectedList: {
+      type: Array,
+      default() {
+        return [];
+      }
+    }
   },
   components: {
     tableColumn,
     circleDot,
     fileshowList
   },
+  updated() {
+    // 选中回显
+    if (this.selectedList && this.selectedList.length) {
+      this.toggleSelection(this.selectedList);
+    }
+  },
   methods: {
+    getClassNameFnc(rowObject) {
+      if (rowObject.row.rowClassName) {
+        return rowObject.row.rowClassName;
+      } else {
+        return;
+      }
+    },
     toggleSelection(rows) {
       if (rows) {
+        let tableData = this.tablelistSettings.tableDatas,
+          key = this.tablelistSettings.tableSettingOptions.rowKey;
         rows.forEach(row => {
-          this.$refs[
-            this.tablelistSettings.tableSettingOptions.ref
-          ].toggleRowSelection(row, true);
+          tableData.forEach(item => {
+            if (row[key] == item[key]) {
+              this.$refs[
+                this.tablelistSettings.tableSettingOptions.ref
+              ].toggleRowSelection(item, true);
+            }
+          });
         });
       } else {
         this.$refs[
           this.tablelistSettings.tableSettingOptions.ref
         ].clearSelection();
+      }
+    },
+    setCurrent(row) {
+      this.$refs[this.tablelistSettings.tableSettingOptions.ref].setCurrentRow(
+        row
+      );
+    },
+    handleCurrentChange(val) {
+      if (val) {
+        this.$emit("handleCurrentChange", val);
       }
     },
     handleExpandTableRow(row, expandObj) {
@@ -381,8 +434,14 @@ export default {
         }
       });
     },
+    handleSelectRow(selection, row) {
+      this.$emit("handleSelectRow", selection, row);
+    },
     handleSelectionChange(val) {
       this.$emit("handleTableMutiChecked", val);
+    },
+    handleSelectAllChange(selection) {
+      this.$emit("handleTableSelectAll", selection);
     },
     handleSelect(selection, row) {
       let selectArr = [];

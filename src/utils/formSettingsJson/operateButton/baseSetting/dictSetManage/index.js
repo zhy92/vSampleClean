@@ -2,31 +2,57 @@ const operateButtons = [
     {
       flag: "add",
       size: "small",
-      icon: "",
+      btnClassName: "searchButtons",
+      icon: "iconfont iconplus text-primary",
       label: "新增",
-      styleType: "primary",
-      postUrl: "",
-      id: "menu_1",
-      showFlag: "true"
+      styleType: "",
+      postUrl: ""
     },
+    // {
+    //   flag: "delete",
+    //   size: "small",
+    //   btnClassName: "searchButtons",
+    //   icon: "iconfont iconminus1 text-primary",
+    //   label: "删除",
+    //   styleType: "",
+    //   postUrl: ""
+    // },
+    // {
+    //   flag: "open",
+    //   size: "small",
+    //   btnClassName: "searchButtons",
+    //   icon: "iconfont iconcheck1 text-primary",
+    //   label: "启用",
+    //   styleType: "",
+    //   postUrl: ""
+    // },
+    // {
+    //   flag: "closed",
+    //   size: "small",
+    //   btnClassName: "searchButtons",
+    //   icon: "iconfont iconban text-primary",
+    //   label: "禁用",
+    //   styleType: "",
+    //   postUrl: ""
+    // },
     {
       flag: "closeSearch",
       size: "small",
-      icon: "",
-      label: "隐藏查询",
-      styleType: "primary",
-      postUrl: "",
-      id: "menu_2",
-      showFlag: "true"
+      btnClassName: "searchButtons",
+      icon: "iconfont iconlong-arrow-up text-primary",
+      label: "",
+      styleType: "",
+      postUrl: ""
     }
   ],
   dictContentOperateButtons = [
     {
       flag: "add",
       size: "small",
-      icon: "",
+      btnClassName: "searchButtons",
+      icon: "iconfont iconplus text-primary",
       label: "新增",
-      styleType: "primary",
+      styleType: "",
       postUrl: ""
     }
   ];

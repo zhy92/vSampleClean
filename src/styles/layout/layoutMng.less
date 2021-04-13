@@ -5,11 +5,11 @@
     .overflowHidden;
     &-header{
       background-color: @mainBgColor;
-      .height(100px);
-      .lh(100px);
+      // .height(100px);
+      // .lh(100px);
     }
     &-main{
-      display: flex;
+      display: flex !important;
       &-sider{
         .overflowHidden;
         .width(275px);
@@ -24,6 +24,12 @@
         .pd20;
         display:flex;
         flex-direction: column;
+      }
+      &-footer{
+        .textAlignCenter;
+        .height(30px);
+        .lh(30px);
+        background-color:@mainBgColor;
       }
     }
   }

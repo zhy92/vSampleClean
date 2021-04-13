@@ -1,4 +1,27 @@
 .tree-components{
   .pd10;
-  background-color: @mainWhite;
+  // background-color: @mainWhite;
+  .el-tree-node__label{
+    color: @color333;
+  }
+  .el-tree-node__content {
+    &:hover {
+      background: #89c2f7;
+    }
+  }
+  .el-tree-node:focus>.el-tree-node__content{
+    background-color: #fff;
+  }
+  .el-menu-item.is-active {
+    background-color: rgb(201, 188, 80) !important;
+  }
+  // .el-tree-node__content:hover{
+  //   background-color: @colorD8 !important;
+  // }
+  // .is-current{
+  //   background-color: @colorD8 !important;
+  //   &:hover{
+  //     background-color: @colorD8 !important;
+  //   }
+  // }
 }

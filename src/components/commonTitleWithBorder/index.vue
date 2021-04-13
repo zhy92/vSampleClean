@@ -1,5 +1,5 @@
 <template>
-  <el-col :span="24">
+  <el-col :span="span">
     <div class="common-title">
       {{ title }}
       <div class="common-title-seperator mr15"></div>
@@ -10,7 +10,11 @@
 export default {
   name: "commonTitleWithBorder",
   props: {
-    title: String
+    title: String,
+    span: {
+      type: Number,
+      default: 24
+    }
   }
 };
 </script>

@@ -4,16 +4,16 @@
  */
 import router, { staticRouterMap } from "@/router/index";
 
-console.log(router);
 const state = {
   userInfos: {
-    userName: "邹海洋",
+    userName: "粮食局",
     userId: "",
-    loginName: "邹海洋",
-    name: "邹海洋",
+    loginName: "粮食局",
+    name: "粮食局",
     password: ""
   },
   userButtons: [],
+  baseInfos: {},
   token: "",
   asyncRouterslist: staticRouterMap
 };

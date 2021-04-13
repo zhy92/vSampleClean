@@ -11,8 +11,14 @@ import changeDateFormat from "./changeDateFormat";
 import uuid from "./uuid";
 import setFilterFormData from "./setFilterFormData";
 import openFilePathInIe from "./openFilePathInIe";
+import arrayGroupByAttr from "./arrayGroupByAttr";
+import sortArrayByProps from "./sortArrayByProps";
 
 const globalFncs = {
+  // 根据数组某一属性把数组排序
+  sortArrayByProps: sortArrayByProps,
+  // 根据数组某一属性把数组元素分组
+  arrayGroupByAttr: arrayGroupByAttr,
   // 打开本地文件夹（只有ie可以使用，只测试过ie11,可用）
   openFilePathInIe: openFilePathInIe,
   // 深拷贝

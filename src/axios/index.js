@@ -81,7 +81,7 @@ axios.interceptors.response.use(
       MessageBox.alert(error.response.data.msg, "会话过期提示", {
         confirmButtonText: "确定",
         callback: () => {
-          location.href = globalVariables.logout;
+          location.href = error.response.data.targetUrl;
         }
       });
     } else {

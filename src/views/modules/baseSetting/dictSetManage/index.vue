@@ -1,9 +1,9 @@
 <template>
-  <div class="mainPage">
-    <el-col class="mainPage-searchTitle mb20" :span="24">
+  <div class="pr10 pl10 width100">
+    <el-col class="mb20" :span="24">
       <commonTitleWithBorder title="查询条件" />
     </el-col>
-    <el-col class="mainPage-searchForm" :span="24">
+    <el-col class="mb20" :span="24">
       <formGroup
         v-if="showSearchForm"
         ref="searchForm"
@@ -11,10 +11,10 @@
         @formGroupSubmit="handleSearchFormBtn"
       />
     </el-col>
-    <el-col class="mainPage-TableTitle" :span="6">
+    <el-col :span="6">
       <commonTitleWithBorder title="列表信息" />
     </el-col>
-    <el-col :span="18" class="mainPage-tableAboveBtns textAlignRight">
+    <el-col :span="18" class="mb10 textAlignRight">
       <operateButtonsGroup
         class="textAlignRight"
         :operateButtonsSettings="operateButtonsSettings"
@@ -72,7 +72,7 @@ import methods from "./methods";
 import dataFnc from "./data";
 
 export default {
-  name: "roleSetManage",
+  name: "dictSetManage",
   data: function() {
     return dataFnc(this);
   },

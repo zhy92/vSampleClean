@@ -9,6 +9,9 @@ const getters = {
   userButtons: state => {
     return state.userButtons;
   },
+  baseInfos: state => {
+    return state.baseInfos;
+  },
   token: state => {
     return state.token;
   },

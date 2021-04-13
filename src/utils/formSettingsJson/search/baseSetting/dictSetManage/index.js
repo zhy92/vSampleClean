@@ -2,10 +2,11 @@ let searchFormBtns = [
     {
       flag: "search",
       size: "",
-      icon: "",
+      btnClassName: "searchButtons",
+      icon: "iconfont iconsearch text-primary",
       label: "查询",
-      styleType: "primary",
-      postUrl: "getDictList"
+      postUrl: "getDictList",
+      styleType: ""
     }
   ],
   searchFormItems = [
@@ -14,14 +15,14 @@ let searchFormBtns = [
       label: "编码",
       name: "busintypeid",
       span: 8,
-      width: "100px"
+      width: "80px"
     },
     {
       type: "input",
       label: "名称",
       name: "busintypename",
       span: 8,
-      width: "100px"
+      width: "80px"
     }
   ];
 export { searchFormBtns, searchFormItems };

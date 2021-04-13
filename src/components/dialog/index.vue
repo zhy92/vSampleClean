@@ -33,7 +33,9 @@
       @handleRemoveFiles="handleRemoveFiles"
       @handleReadFiles="handleReadFiles"
       @handleHtmlNodeAction="handleHtmlNodeAction"
-    />
+    >
+      <slot></slot>
+    </formGroup>
     <formBlocks
       ref="formBlocks"
       v-if="dialogFormSettings.dialogType == 'formBlocks'"
@@ -51,6 +53,7 @@
       width="100%"
       alt=""
     />
+    <slot name="other"></slot>
   </el-dialog>
 </template>
 <script>

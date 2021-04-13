@@ -1,33 +1,22 @@
-import baseApi from "./apiModules/base";
 import userApi from "./apiModules/user";
-import infosManageApi from "./apiModules/infosManage";
-import assessmentApi from "./apiModules/assessment";
-
+import common from "./apiModules/common";
+import baseSettingApi from "./apiModules/baseSetting";
+import siteSettingApi from "./apiModules/siteSetting";
+import planSettingApi from "./apiModules/planSetting";
 /**
  * 接口列表
  *  */
 const apiInterface = {
-  /**
-   * 基础数据
-   */
-  ...baseApi,
-  /**
-   * 登录验证
-   */
+  // 登录验证
   ...userApi,
-  /**
-   * 信息管理
-   */
-  ...infosManageApi,
-  /**
-   * 年度考核
-   */
-  ...assessmentApi,
-  /**
-   * 公共接口地址
-   */
-  downloadFile_commonApi: "/_data/frame/fbfile/download?fbFileId=",
-  showOnlineFile_commonApi: "/_data/frame/fbfile/show"
+  // 通用接口
+  ...common,
+  // 基础数据
+  ...baseSettingApi,
+  // 基地管理
+  ...siteSettingApi,
+  // 计划管理
+  ...planSettingApi
 };
 
 export default apiInterface;
