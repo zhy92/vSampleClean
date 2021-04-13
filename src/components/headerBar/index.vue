@@ -1,51 +1,57 @@
 <template>
   <div class="main-top-logo" :style="headInfos.style">
     <el-col :span="24">
-      <el-image
-        v-if="headInfos.logoStyle.showImg"
-        :class="headInfos.logoClassName"
-        :style="headInfos.logoStyle.style ? headInfos.logoStyle.style : ''"
-        :src="headInfos.logoStyle.imgSrc"
-        :alt="headInfos.logoStyle.imgTitle || ''"
-        :title="headInfos.logoStyle.imgTitle || ''"
-        :fit="headInfos.logoStyle.fit || 'fit'"
+      <el-col class="pl20" :span="headInfos.operate ? 16 : 24">
+        <el-image
+          v-if="headInfos.logoStyle.showImg"
+          :class="headInfos.logoClassName"
+          :style="headInfos.logoStyle.style ? headInfos.logoStyle.style : ''"
+          :src="headInfos.logoStyle.imgSrc"
+          :alt="headInfos.logoStyle.imgTitle || ''"
+          :title="headInfos.logoStyle.imgTitle || ''"
+          :fit="headInfos.logoStyle.fit || 'fit'"
+        >
+        </el-image>
+        <div
+          v-if="headInfos.title"
+          class="displayInlineBlock overflowHidden ml20 text-white"
+        >
+          {{ headInfos.title }}
+        </div>
+      </el-col>
+
+      <el-col
+        class="headerToolbar textAlignRight pt28"
+        :span="8"
+        v-if="headInfos.operate"
       >
-      </el-image>
-      <div
-        v-if="headInfos.title"
-        class="displayInlineBlock overflowHidden ml20 text-white"
-      >
-        {{ headInfos.title }}
-      </div>
-      <el-menu
-        :default-active="activeIndex"
-        class="displayInlineBlock main-top-logo-menu ml50"
-        mode="horizontal"
-        @select="handleSelect"
-        background-color="#00A69C"
-        text-color="#fff"
-        active-text-color="#fff"
-      >
-        <el-menu-item class=" fontSize16" index="1">生态概况</el-menu-item>
-        <el-menu-item class=" fontSize16" index="2">种植管理</el-menu-item>
-        <el-menu-item class=" fontSize16" index="3">任务中心</el-menu-item>
-        <!-- <el-submenu index="2">
-          <template slot="title">
-            我的工作台
-          </template>
-          <el-menu-item index="2-1">选项1</el-menu-item>
-          <el-menu-item index="2-2">选项2</el-menu-item>
-          <el-menu-item index="2-3">选项3</el-menu-item>
-          <el-submenu index="2-4">
-            <template slot="title">
-              选项4
-            </template>
-            <el-menu-item index="2-4-1">选项1</el-menu-item>
-            <el-menu-item index="2-4-2">选项2</el-menu-item>
-            <el-menu-item index="2-4-3">选项3</el-menu-item>
-          </el-submenu>
-        </el-submenu> -->
-      </el-menu>
+        <span
+          class="headerToolbar-icon el-icon-s-custom currentUser text-white"
+        ></span>
+        <span class="mr24 positionRel" style="top:-3px;">
+          {{ headInfos.loginName }}
+        </span>
+        <!-- <span
+          class="headerToolbar-icon el-icon-message-solid cursor positionRel"
+          @click="skipMsg"
+        >
+          <span class="noticeTips" v-show="$store.getters.unreadNotice > 0">
+            {{ $store.getters.unreadNotice }}
+          </span>
+        </span> -->
+        <el-badge :value="headInfos.unreadNotice || 0" :max="99" class="mr24">
+          <span
+            class=" mr0 headerToolbar-icon el-icon-message-solid cursor positionRel"
+            @click="skipMsg"
+          >
+          </span>
+        </el-badge>
+        <span
+          class="headerToolbar-icon el-icon-delete mr24"
+          @click="logout('clear')"
+        ></span>
+        <a class="headerToolbar-icon el-icon-switch-button" @click="logout"></a>
+      </el-col>
     </el-col>
   </div>
 </template>
@@ -56,15 +62,7 @@ export default {
   props: {
     headInfos: Object
   },
-  data() {
-    return {
-      activeIndex: "1"
-    };
-  },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
     skipMsg() {
       this.$router.push("/informationsPage/infosManage/indexInfosDistribution");
     },

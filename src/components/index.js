@@ -14,11 +14,9 @@ import VueECharts from "vue-echarts";
 import headerBar from "@/components/headerBar";
 import menuTable from "@/components/menuTable";
 import inputTable from "@/components/formGroup/inputTable";
-import horizenNav from "@/components/horizenNav";
 
 export default {
   install(Vue) {
-    Vue.component("horizenNav", horizenNav);
     Vue.component("inputTable", inputTable);
     Vue.component("headerBar", headerBar);
     Vue.component("menuTable", menuTable);

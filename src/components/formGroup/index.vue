@@ -362,6 +362,12 @@
                   :format="formItem.format"
                   :value-format="formItem.valueFormat"
                   :disabled="formItem.disabled"
+                  @change="
+                    handleChangeSelect(
+                      formItem.linkName,
+                      formGroupSettings.formGroupValues[formItem.name]
+                    )
+                  "
                 ></el-date-picker>
               </el-form-item>
               <!-- item:button -->
@@ -622,14 +628,15 @@
         </el-col>
         <slot></slot>
         <el-col :span="formGroupSettings.fullScreen ? 24 : 3">
-          <el-form-item
-            label-width="0"
-            :class="[
+          <!-- :class="[
               formGroupSettings.fullScreen
                 ? 'textAlignCenter'
                 : 'textAlignRight',
               formGroupSettings.buttonGroupClass
-            ]"
+            ]" -->
+          <el-form-item
+            label-width="0"
+            :class="['textAlignRight', formGroupSettings.buttonGroupClass]"
           >
             <el-button
               v-for="formBtn in formGroupSettings.formButtonList"

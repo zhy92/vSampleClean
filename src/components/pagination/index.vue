@@ -2,8 +2,10 @@
   <div class="pagination">
     <div class="block">
       <el-pagination
+        :small="paginationSettings.smallPager"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
+        :pager-count="paginationSettings.pagerCount || 7"
         :current-page="paginationSettings.currentPage || 1"
         :page-sizes="
           paginationSettings.pageSizeChangeList ||
