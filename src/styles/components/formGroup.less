@@ -1,0 +1,43 @@
+.form-group{
+  .el-form-item{
+    .mb15;
+  }
+  &-blocks{
+    .mb15;
+    .common-title-seperator{
+      .mb0;
+    }
+    &-items{
+      border:1px solid @colorCCC;
+      .pd10;
+      .el-form-item{
+        .mb10;
+        .mt10;
+      }
+    }
+  }
+  /deep/ .el-transfer-panel {
+    width: 300px
+  }
+  .el-input__inner{
+    border: 1px solid @colorCCC;
+  }
+  .el-input__suffix-inner{
+    .el-icon-circle-close{
+      color: @danger;
+    }
+  }
+  // 数字类型隐藏箭头
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  input[type="number"]{
+    -moz-appearance: textfield;
+    line-height: 0 !important;
+  }
+  .updTips{
+    .pd5;
+    color:@danger;
+  }
+}

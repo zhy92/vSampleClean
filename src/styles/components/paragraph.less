@@ -1,0 +1,25 @@
+.paragraph{
+  .pt20;
+  .pb20;
+  .pl5;
+  .pr5;
+  &-title{
+    text-align: center;
+    .mb20;
+  }
+  &-text{
+    line-height: 30px;
+    .mb15;
+    &:last-child{
+      .mb0;
+    }
+    table{
+      .textAlignCenter;
+      border: 1px solid @color999;
+      td{
+        .textAlignCenter;
+        border: 1px solid @color999;
+      }
+    }
+  }
+}

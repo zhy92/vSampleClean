@@ -1,0 +1,376 @@
+// 引入全局定义样式 define.less
+@import "./define.less";
+
+// 引入组件样式
+@import "./components/headerBar.less";
+@import "./components/dialog.less";
+@import "./components/horizenNav.less";
+@import "./components/siderNav.less";
+@import "./components/breadCrumb.less";
+@import "./components/carousel.less";
+@import "./components/card.less";
+@import "./components/commonTitleWithBorder.less";
+@import "./components/loginBox.less";
+@import "./components/horizenMidBanner.less";
+@import "./components/horizenTopBanner.less";
+@import "./components/paragraph.less";
+@import "./components/pagination.less";
+@import "./components/footer.less";
+@import "./components/idcard.less";
+@import "./components/tableList.less";
+@import "./components/tree.less";
+@import "./components/ktSelectTree.less";
+@import "./components/tableForm.less";
+@import "./components/citcle-dot.less";
+@import "./components/formGroup.less";
+@import "./components/menuTable.less";
+
+// 引入工程内通用样式
+@import "./projectStyle/common.less";
+@import "./projectStyle/modifyFrame.less";
+//引入工程主页面布局样式
+@import "./layout/layoutMng.less";
+
+// 页面样式重置
+
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre, 
+form,fieldset,input,textarea,p,blockquote,th,td { 
+    padding: 0; 
+    margin: 0; 
+    box-sizing: border-box;
+} 
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+  font-weight: 400;
+//   font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+table { 
+    border-collapse: collapse; 
+    border-spacing: 0; 
+} 
+fieldset,img { 
+    border: 0; 
+} 
+address,caption,cite,code,dfn,em,strong,th,var {
+    //font-weight: normal;
+    //font-style: normal;
+} 
+ol,ul { 
+    list-style: none; 
+} 
+caption,th { 
+    text-align: left; 
+} 
+h1,h2,h3,h4,h5,h6 { 
+    font-weight: normal; 
+    font-size: 100%; 
+} 
+q:before,q:after { 
+    content:""; 
+} 
+abbr,acronym { 
+    border: 0; 
+}
+
+p,ul {
+    display: block;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0;
+}
+
+/* 通用样式 */
+// 定位
+.positionAbs{
+	position: absolute;
+}
+.positionRel{
+	position: relative;
+}
+.positionFix{
+	position: fixed;
+}
+.positionCenterWrap{
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 999;
+}
+.positionFullScreenWrap{
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+}
+// 显示相关
+.displayBlock{
+	display: block;
+}
+.displayNone{
+	display: none;
+}
+.displayInlineBlock{
+	display: inline-block;
+}
+.displayInline{
+	display: inline;
+}
+.displayFlex{
+    display: flex;
+}
+// tabel竖直方向显示
+.vAlignTop{
+	vertical-align: top;
+}
+.vAlignMid{
+	vertical-align: middle;
+}
+.vAlignBtm{
+	vertical-align: bottom;
+}
+// 浮动
+.floatLeft{
+	float: left;
+}
+.floatRight{
+	float: right;
+}
+// 清除浮动
+.clearfix{
+	&:before, &:after {
+		display: table;
+		content: "";
+	}
+	&:after {
+		clear: both
+	}
+}
+// 字体显示
+.textBold{
+	font-weight: bold !important;
+}
+.textAlignCenter{
+	text-align: center !important;
+}
+.textAlignLeft{
+	text-align: left !important;
+}
+.textAlignRight{
+	text-align: right !important;
+}
+// 文字溢出显示省略号
+.textEllipsis{
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+.overflowXhYa{
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.overflowHidden{
+    overflow: hidden;
+}
+.overflowVisible{
+    overflow: visible;
+}
+
+// 无边框
+.borderNone{
+	border: 0 !important;
+}
+// 字体颜色，使用方式：class="text-warning text-danger"
+.text{
+  &-warning{
+    color: @warning;
+  }
+  &-danger{
+    color: @danger;
+  }
+  &-success{
+    color: @success;
+  }
+  &-primary{
+    color: @primary;
+  }
+  &-white{
+    color: @mainWhite;
+  }
+  &-plainInfo {
+    color: #bfbfbf;
+  }
+}
+// 鼠标显示为手型👆
+.cursor{
+	cursor: pointer;
+}
+// 自动边距（用于补充下方边距函数的短缺）
+.mgAuto{
+	margin: auto;
+}
+// 宽度100%（用于补充下方宽度函数的短缺）
+.width100{
+	.width(100%) !important;
+}
+// 宽度100%（用于补充下方宽度函数的短缺）
+.height100{
+    .height(100%) !important;
+}
+// 样式函数主要用于less源码中的调用，不用于页面
+// 待调用宽度样式函数，使用方式如上面宽度100%的样式
+.width(@a:100px){
+    width: @a;
+}
+.height(@a:100px){
+    height: @a !important;
+}
+// 待调用行高样式函数，使用方式如上面宽度100%的样式
+.lh(@a:100px){
+    line-height: @a !important;
+}
+// 待调用圆角样式函数，使用方式如上面宽度100%的样式
+.borderRadius(@a:5px){
+    border-radius: @a;
+}
+
+//循环生成行高样式，调用时可直接在页面上使用<div class="lheight30">
+//定义lineHeight数组，生成样式名：lheight20，lheight30,lheight40......
+@fontSizeList: 12 14 15 16 17 18 20 22 24 28 30 38 40 60;
+.fS-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .fontSize@{val}{
+        font-size:@val + 0px !important;
+    }
+    .fS-loop(@list,(@i+1));
+}
+.fS-loop(@fontSizeList);
+
+                     
+//循环背景色样式，调用时可直接在页面上使用<div class="bgfff">
+//定义bg数组，从define定义的颜色中取色值名称，生成样式名：bgfff，bgeee......
+@bgList: fff eee 409EFF 1EA6C0 F4B81B FF8282;
+.bg-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .bg@{val}{
+        background-color: ~"#@{val}" !important;
+    }
+    .bg-loop(@list,(@i+1));
+}
+.bg-loop(@bgList);
+
+//循环背景色样式，调用时可直接在页面上使用<div class="bgfff">
+//定义bg数组，从define定义的颜色中取色值名称，生成样式名：bgfff，bgeee......
+@textColorList: 666;
+.tC-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .textColor@{val}{
+        color: ~"#@{val}" !important;
+    }
+    .tC-loop(@list,(@i+1));
+}
+.tC-loop(@textColorList);
+
+//循环生成圆角样式，调用时可直接在页面上使用<div class="borderR30">
+//定义borderRadius数组，生成样式名：borderR1，borderR2,borderR10......
+@borderRadiusList: 1 2 3 4 5 8 10 20 30 50;
+.br-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .borderR@{val}{
+        border-radius:@val + 0px !important;
+    }
+    .br-loop(@list,(@i+1));
+}
+.br-loop(@borderRadiusList);
+
+//循环生成行高样式，调用时可直接在页面上使用<div class="lheight30">
+//定义lineHeight数组，生成样式名：lheight20，lheight30,lheight40......
+@lineHeightList: 20 24 28 30 40 90;
+.lh-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .lheight@{val}{
+        line-height:@val + 0px !important;
+    }
+    .lh-loop(@list,(@i+1));
+}
+.lh-loop(@lineHeightList);
+
+// 循环生成边距样式，调用时可直接在页面上使用<div class="pd30">
+// pd30:padding:30px        
+// pl30:padding-left:30px        
+// pt30:padding-top:30px
+// pb30:padding-bottom:30px
+// pr30:padding-right:30px
+// mg30:margin:30px
+// ml30:margin-left:30px
+// mr30:margin-right:30px
+// mt30:margin-top:30px
+// mb30:margin-bottom:30px
+// 30可以替换成@distant中定义的任一个数字，对应的边框为该数字的数值，mb50:margin-bottom:50px
+// 如需添加新的边距值，直接在@distant中添加即可，其他函数方法同样的处理即可
+//定义要生成的class名称数组
+@distantName:pd pl pr pt pb mg ml mr mt mb;
+//定义要生成的边距距离数组
+@distant:-20 0 3 4 5 6 8 10 14 15 20 23 24 25 28 30 33 40 45 50 60 70 100;
+.loop3(@index) when (@index < length(@distantName)+1) {
+    .loop2(@counter,@val:extract(@distant,@counter)) when (@counter < length(@distant)+1) {
+        & when (extract(@distantName, @index) = pd) {
+            .pd@{val}{
+                padding: extract(@distant, @counter) + 0px !important;
+            }
+        }    
+        & when (extract(@distantName, @index) = pl) {
+            .pl@{val}{
+                padding-left: extract(@distant, @counter) + 0px !important;
+            }
+        }    
+        & when (extract(@distantName, @index) = pr) {
+            .pr@{val}{
+                padding-right: extract(@distant, @counter) + 0px !important;
+            }
+        }    
+        & when (extract(@distantName, @index) = pt) {
+            .pt@{val}{
+                padding-top: extract(@distant, @counter) + 0px !important;
+            }
+        }    
+        & when (extract(@distantName, @index) = pb) {
+            .pb@{val}{
+                padding-bottom: extract(@distant, @counter) + 0px !important;
+            }
+        }
+        & when (extract(@distantName, @index) = mg) {
+            .mg@{val}{
+                margin: extract(@distant, @counter) + 0px !important;
+            }
+        }    
+        & when (extract(@distantName, @index) = ml) {
+            .ml@{val}{
+                margin-left: extract(@distant, @counter) + 0px !important;
+            }
+        }    
+        & when (extract(@distantName, @index) = mr) {
+            .mr@{val}{
+                margin-right: extract(@distant, @counter) + 0px !important;
+            }
+        }    
+        & when (extract(@distantName, @index) = mt) {
+            .mt@{val}{
+                margin-top: extract(@distant, @counter) + 0px !important;
+            }
+        }    
+        & when (extract(@distantName, @index) = mb) {
+            .mb@{val}{
+                margin-bottom: extract(@distant, @counter) + 0px !important;
+            }
+        }
+        .loop2((@counter + 1));
+    }
+    .loop2(1);
+    .loop3((@index + 1));
+    ///*此处可以不用判断，但是为了页面上调用方便写成了简写方式“pl30”，可以用padding-left代替pl,页面调用添加样式“padding-left:30px”*/
+};
+.loop3(1);
+

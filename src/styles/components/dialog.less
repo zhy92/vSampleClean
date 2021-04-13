@@ -1,0 +1,34 @@
+.defaultDialogClass{
+  // max-height: 80%;
+  // overflow-y: hidden;
+  top: 50%;
+  transform: translateY(-50%);
+  .mt0;
+  .el-dialog__header{
+    border-bottom:1px solid @colorCCC;
+    font-weight: 500;
+    // background-color: @primary;
+    .pl20;
+    .pr20;
+    .pt15;
+    .pb15;
+    .el-dialog__title{
+      .fontSize16;
+      color:@primary;
+    }
+    .el-dialog__close{
+      color:@colorCCC;
+    }
+  }
+  .el-dialog__body{
+    max-height: 700px;
+    overflow-y: auto;
+  }
+  &-tips{
+    .pd10;
+    margin-top: -15px;
+    .mb20;
+    color: @mainWhite;
+    background-color: @warning;
+  }
+}

@@ -1,0 +1,52 @@
+// 通用样式
+#app {
+	font-family: "Avenir", Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+//修改element-ui部分样式
+.el-header, .el-main, .el-footer{
+	.pd0;
+}
+.el-table{
+  .cell{
+    // text-align: center;
+    // width: 100% !important;
+    p{
+      display: inline-block;
+    }
+  }
+}
+.upload-demo{
+  .mt4;
+}
+.el-table__header, .el-table__body{
+  .width100;
+}
+.el-transfer-panel__item{
+  .displayBlock
+}
+// formgroup组件内，editor行高重置
+.formItemLh{
+	.el-form-item__content{
+    .ml0 !important;
+    .pr3;
+	}
+}
+.el-form-item__content{
+  line-height: inherit;
+}
+
+// 禁用控件样式
+.el-input.is-disabled .el-input__inner,.el-textarea.is-disabled .el-textarea__inner {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+// popover宽度
+.el-popover{
+  min-width: 30px;
+}
+// 树下拉
+.selectTree{
+  max-width: 100%;
+}

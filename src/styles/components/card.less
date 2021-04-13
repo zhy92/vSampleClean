@@ -1,0 +1,94 @@
+.card{
+  height: 360px;
+  background-color: #FAFAFA;
+  //border:1px solid rgba(234,234,234,1);
+  .pt10;
+  .pb10;
+  .el-card{
+    border: 0;
+  }
+  &-container{
+    border: 0;
+    background-color: #FAFAFA !important;
+    box-shadow: 0 !important;
+    .borderRadius(0);
+    min-height: 260px;
+    .el-card__header, .el-card__body{
+      .pd0;
+      border: 0;
+    }
+    .el-card__body{
+      .pt10;
+      .pl20;
+      .pr20;
+      height: 310px;
+      border-radius: 12px;
+      border: 1px solid #8BDEFF;
+    }
+    &-header{
+      //border-bottom: 2px solid @mainBgColor;
+      //border-bottom: 2px solid #EAEAEA;
+      height: 50px;
+      background: linear-gradient(90deg, #BBE9CF 0%, #F7FFFA 100%);
+      border-radius: 12px;
+      &-title{
+        display: inline-block;
+        min-width: 200px;
+        height:50px;
+        font-size:16px;
+        font-weight:400;
+        &-seperator{
+          width: 8px;
+          height: 20px;
+          background: @mainBgColor;
+          border-radius: 100px;
+        }
+        &-text{
+          line-height: 50px;
+          .mt0;
+        }
+      }
+      &-operateBtn{
+        font-size:12px;
+        font-family:PingFangSC;
+        font-weight:400;
+        color:@mainBgColorLight !important;
+        line-height:24px;
+      }
+    }
+    &-item:not(:last-child) {
+      border-bottom: 1px dotted #C0C0C0;
+    }
+    &-item{
+      font-size:14px;
+      font-weight:400;
+      color:@color333;
+      line-height:16px;
+      cursor: pointer;
+
+      &-text{
+        &-icon{
+          .borderRadius(50%);
+          width: 14px;
+          height: 14px;
+          border: 1px solid @cardItemCircle;
+        }
+      }
+        &-text:hover{
+            color: @primary;
+        }
+      &-date{
+        color: @color999;
+      }
+      &-download{
+        color: @mainBgColor;
+        &:hover{
+          color: @mainBgColorLight;
+        }
+      }
+      &:hover > &-text > &-text-icon{
+        border: 1px solid @mainBgColorLight;
+      }
+    }
+  }
+}
